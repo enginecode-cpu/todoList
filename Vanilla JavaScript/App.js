@@ -2,7 +2,9 @@ const todoInput = document.querySelector('.todo-input');
 const todoBtn = document.querySelector('.todo-button');
 const todoList = document.querySelector('.todo-list');
 
+// Event
 todoBtn.addEventListener('click', addTodo);
+todoList.addEventListener('click', deleteCheck);
 
 function addTodo(event) {
     event.preventDefault();
@@ -19,7 +21,7 @@ function addTodo(event) {
     // div 태그 안에 li 태그 넣기
     todoDiv.appendChild(newTodo);
 
-    // check 버튼
+    // check 버튼 만들기
     const completedBtn = document.createElement('button');
     completedBtn.innerHTML = '<i class="fas fa-check"></i>';
     completedBtn.classList.add('complete-btn');
@@ -39,4 +41,22 @@ function addTodo(event) {
     todoList.appendChild(todoDiv);
 
     todoInput.value = '';
+}
+
+function deleteCheck(event) {
+    const item = event.target;
+
+    if (item.classList[0] === 'delete-btn') {
+        const todo = item.parentElement;
+        todo.classList.add('fall');
+
+        todo.addEventListener('transitionend', () => {
+            todo.remove();
+        })
+    }
+
+    if (item.classList[0] === 'complete-btn') {
+        const todo = item.parentElement;
+        todo.classList.toggle('completed');
+    }
 }
