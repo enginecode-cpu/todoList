@@ -20,6 +20,9 @@ function addTodo(event) {
     newTodo.innerText = todoInput.value;
     newTodo.classList.add('todo-item');
 
+    // local에 저장하기
+    saveLocalTodos(todoInput.value);
+
     // div 태그 안에 li 태그 넣기
     todoDiv.appendChild(newTodo);
 
@@ -86,4 +89,16 @@ function filterTodo(event) {
                 break;
         }
     })
+}
+
+function saveLocalTodos(todo) {
+    let todos;
+    if (localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+
+    todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(todos));
 }
