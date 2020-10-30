@@ -56,6 +56,8 @@ function deleteCheck(event) {
         const todo = item.parentElement;
         todo.classList.add('fall');
 
+        removeLocalTodos(todo);
+
         todo.addEventListener('transitionend', () => {
             todo.remove();
         })
@@ -144,4 +146,17 @@ function getTodos() {
         // ul 태그 안에 넣기
         todoList.appendChild(todoDiv);
     })
+}
+
+function removeLocalTodos(todo) {
+    let todos;
+    if (localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+
+    const todoIndex = todo.children[0].innerText;
+    todos.splice(todos.indexOf(todoIndex), 1);
+    localStorage.setItem('todos', JSON.stringify(todos));
 }
